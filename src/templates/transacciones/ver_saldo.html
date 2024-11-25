@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    Ver Saldo
+{% endblock title_block %}
+
+{% block css_extras %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock css_extras %}
+
+{% block content %}
+<main class="app-main">
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Saldo de {{ request.user.username }}</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Ver Saldo</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-content d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-primary card-outline mb-4">
+                <div class="card-header">
+                    <div class="card-title">Saldo Actual</div>
+                </div>
+                <div class="card-body">
+                    <p><strong>Saldo actual:</strong> {{ saldo_actual|floatformat:2 }}</p>
+                    
+                    <hr>
+                    
+                    {% comment %} <h5>Depósitos recientes</h5>
+                    {% if depositos %}
+                        <ul class="list-group">
+                            {% for deposito in depositos %}
+                                <li class="list-group-item">
+                                    <strong>Monto:</strong> {{ deposito.monto|floatformat:2 }}<br>
+                                    <strong>Fecha:</strong> {{ deposito.fecha|date:"d M. Y H:i" }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No se han registrado depósitos.</p>
+                    {% endif %} {% endcomment %}
+                </div>
+                <div class="card-footer d-flex">
+                    <a href="{% url 'transacciones:ingresar_dinero' %}" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Ingresar dinero
+                    </a>
+                    <a href="{% url 'transacciones:transferir_dinero' %}" class="btn btn-secondary ml-2">
+                        <i class="fa-solid fa-arrow-right"></i> Transferir dinero
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    Editar Datos
+{% endblock title_block %}
+
+{% block content %}
+<main class="app-main">
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <h3 class="mb-0">{{ titulo }}</h3>
+        </div>
+    </div>
+    <div class="app-content d-flex justify-content-center">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ titulo }}</h4>
+                    </div>
+                    <div class="card-body">
+                        {% include 'includes/forms_errors.html' with form=formUsuario %}
+                        {% include 'includes/forms.html' with form=formUsuario %}
+                        
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <a href="{% url 'inicio' %}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content %}

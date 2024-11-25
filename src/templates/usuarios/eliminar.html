@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    Eliminar Usuario
+{% endblock title_block %}
+
+{% block content %}
+    <main class="app-main">
+        <div class="app-content-header">
+            <div class="container-fluid">
+                <h3 class="mb-0">Confirmar Eliminación</h3>
+            </div>
+        </div>
+        <div class="app-content d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-danger card-outline">
+                    <div class="card-header">
+                        <h4 class="card-title">Eliminar Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>¿Estás seguro de que deseas eliminar al usuario: <strong>{{ usuario.username }}</strong>?</p>
+                        <p class="text-danger"><strong>Esta acción no se puede deshacer.</strong></p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i> Confirmar Eliminación
+                            </button>
+                        </form>
+                        <a href="{% url 'usuarios:lista' %}" class="btn btn-secondary">
+                            <i class="fa-solid fa-arrow-left"></i> Cancelar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

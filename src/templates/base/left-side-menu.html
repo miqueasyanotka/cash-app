@@ -1,0 +1,70 @@
+{% load static %}
+<!--begin::Sidebar-->
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
+    <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="" class="brand-link"> <!--begin::Brand Image--> <img src="{% static 'assets/img/AdminLTELogo.png' %}" alt="Logo app vac" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <a href="{% url 'inicio' %}"> <span class="brand-text fw-light">Cash App</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+    <div class="sidebar-wrapper">
+
+        <nav class="mt-2"> <!--begin::Sidebar Menu-->
+            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item"> <a href="{% url 'usuarios:lista' %}" class="nav-link"> <i class="bi bi-person-badge"></i>
+                        <p>Lista de Usuarios</p>
+                    </a>
+                </li>
+                {% if request.user.is_superuser or request.user.es_admin %}
+                <li class="nav-item"> <a href="{% url 'transacciones:listar_motivos' %}" class="nav-link"> <i class="bi bi-person-badge"></i>
+                    <p>Motivos</p>
+                </a>
+                {% endif %}
+ 
+
+                <li class="nav-item"> <a href="{% url 'transacciones:marcar_favorito' %}" class="nav-link"> <i class="bi bi-person-badge"></i>
+                    <p>Cuentas favoritas</p>
+                </a>
+            </li>
+
+            </li>
+                <li class="nav-header">
+                    <hr style="border: 1px solid white;"/>
+                </li>
+                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                        <p>
+                            {Cuenta}
+                            {% comment %} {ITEM 2} {% endcomment %}
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item"> <a href="{% url 'transacciones:ingresar_dinero' %}" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                                <p>
+                                    {Ingresar Dinero}
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+
+                        <li class="nav-item"> <a href="{% url 'transacciones:transferir_dinero' %}" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                            <p>
+                                {Transferir Dinero}
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+
+                        <li class="nav-item"> <a href="{% url 'transacciones:ver_saldo' %}" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                            <p>
+                                {Ver Saldo}
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+                        <li class="nav-item"> <a href="{% url 'transacciones:historial' %}" class="nav-link"> <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                            <p>
+                                {Ver Historial}
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+                    </ul>
+                </li>
+
+            </ul> <!--end::Sidebar Menu-->
+        </nav>
+    </div> <!--end::Sidebar Wrapper-->
+</aside> <!--end::Sidebar-->

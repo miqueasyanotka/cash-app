@@ -1,0 +1,212 @@
+{% extends "base/base.html" %}
+
+{% block title_block %}
+        Historial de Transferencias
+{% endblock title_block %}
+
+{% block css_extras %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock css_extras %}
+
+{% block content %}
+<main class="app-main">
+    <!-- Header -->
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Historial de Transferencias</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Historial</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="card-title">Transferencias</h3>
+                        </div>
+                        <div class="card-body">
+
+                            {% if request.user.es_admin or request.user.is_active %}
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tipo</th>
+                                        <th>Emisor</th>
+                                        <th>Receptor</th>
+                                        <th>Monto</th>
+                                        <th>Motivo</th>
+                                        <th>Fecha</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for transaccion in page_obj %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            {% if transaccion.emisor %}
+                                                <td>Transferencia</td>
+                                                <td>{{ transaccion.emisor.username }}</td>
+                                                <td>{{ transaccion.receptor.username }}</td>
+                                                <td>${{ transaccion.monto }}</td>
+                                                <td>{{ transaccion.motivo.nombre }}</td>
+                                                <td>{{ transaccion.fecha_transferencia|date:"d/m/Y H:i" }}</td>
+
+                                            {% else %}
+                                                <td>Depósito</td>
+                                                <td>{{ transaccion.usuario.username }}</td>
+                                                <td>N/A</td>
+                                                <td>${{ transaccion.monto }}</td>
+                                                <td>N/A</td>
+                                                <td>{{ transaccion.fecha|date:"d/m/Y H:i" }}</td>
+                                            {% endif %}
+                                            
+                                            <td class="text-center">
+                                                <a href="{% url 'transacciones:ver_comprobante' transaccion.tipo transaccion.id %}" 
+                                                   class="btn btn-sm btn-info" title="Ver Comprobante">
+                                                    <i class="fas fa-eye"></i> Ver
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">No se encontraron transacciones.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <div class="card-footer d-flex justify-content-center">
+                            {% include "includes/paginacion.html" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+{% extends "base/base.html" %}
+
+{% block title_block %}
+        Historial de Transferencias
+{% endblock title_block %}
+
+{% block css_extras %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock css_extras %}
+
+{% block content %}
+<main class="app-main">
+    <!-- Header -->
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Historial de Transferencias</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Home</a></li>
+                        <li class="breadcrumb-item active">Historial</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="card-title">Transferencias</h3>
+                        </div>
+                        <div class="card-body">
+
+                            {% if request.user.es_admin or request.user.is_active %}
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Emisor</th>
+                                        <th>Receptor</th>
+                                        <th>Monto</th>
+                                        <th>Motivo</th>
+                                        <th>Fecha</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for transferencia in transferencias %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ transferencia.emisor.username }}</td>
+                                            <td>{{ transferencia.receptor.username }}</td>
+                                            <td>${{ transferencia.monto }}</td>
+                                            <td>{{ transferencia.motivo.nombre }}</td>
+                                            <td>{{ transferencia.fecha|date:"d/m/Y H:i" }}</td>
+                                            <td class="text-center">
+                                                <a href="{% url 'transacciones:ver_comprobante' transferencia.id %}" 
+                                                   class="btn btn-sm btn-info" title="Ver Comprobante">
+                                                    <i class="fas fa-eye"></i> Ver
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">No se encontraron transferencias.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <div class="card-footer d-flex justify-content-center">
+                            {% include "includes/paginacion.html" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %} {% endcomment %}

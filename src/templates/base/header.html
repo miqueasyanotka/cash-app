@@ -1,0 +1,89 @@
+{% load static %}
+
+<nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Start Navbar Links-->
+        <ul class="navbar-nav">
+            <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
+
+        </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
+
+        <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
+
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    {% if user.is_authenticated %}
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" class="user-image rounded-circle shadow" alt="User Image">
+                        {% else %}
+                            <img src="{% static 'assets/img/user.png' %}" class="user-image rounded-circle shadow" alt="User Image">
+                        {% endif %}
+                        <span class="d-none d-md-inline">{{ user.username }}</span>
+                    {% else %}
+                     <img src="{% static 'assets/img/user.png' %}" class="user-image rounded-circle shadow" alt="User Image">
+                        <p><a href="{% url 'login' %}">AUTENTICARSE</a></p>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
+                    <li class="user-header text-bg-primary">
+                         {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}"  class="rounded-circle shadow" alt="User Image">
+                        {% else %}
+                            <img src="{% static 'assets/img/user.png' %}" class="rounded-circle shadow" alt="User Image">
+                        {% endif %}
+                        <p>
+                            {% if user.is_authenticated %}
+                                <h3>{{user.get_full_name}}</h3>
+                            {% else %}
+                                <p><a href="{% url 'login' %}">SIN AUTENTICAR</a></p>
+                            {% endif %}
+
+                            <small>
+                                
+                                {% if request.user.es_admin %}
+                                    <p>Administrador</p>
+                                {% else %}
+                                    <p>Usuario</p>
+                                {% endif %}
+                            </small>
+                        </p>
+                    </li> <!--end::User Image--> <!--begin::Menu Body-->
+                    {% if user.is_superuser %}
+                        <li class="user-body"> <!--begin::Row-->
+                            <div class="row">
+                                <div class="col-4 text-center"> <a href="{% url 'admin:index' %}">Admin Django</a> </div>
+
+                            </div> <!--end::Row-->
+                        </li> <!--end::Menu Body-->
+                    {% endif %}
+
+                    <li class="user-footer"> 
+                        <a href="{% url 'usuarios:editar_datos' usuario_id=request.user.id %}" class="btn btn-default btn-flat">Editar datos</a> 
+                    </li>
+
+
+                    <li class="user-footer"> 
+                        <a href="{% url 'usuarios:cambiar_contrasena' usuario_id=request.user.id %}" class="btn btn-default btn-flat">Cambiar contraseña</a> 
+                    </li>
+
+                    <!--begin::Menu Footer-->
+                    <form action="{% url 'logout' %}" method="POST">{% csrf_token %}
+                        <li class="user-footer"> 
+                            <button href="#" class="btn btn-default btn-flat">Salir</button> 
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link d-flex align-items-center gap-2" type="submit">
+                                <svg class="bi">
+                                    <use xlink:href="#door-closed"></use>
+                                </svg>
+                                Salir
+                            </button>
+                        </li>
+                    </form>
+
+
+                     
+                </ul>
+            </li> <!--end::User Menu Dropdown-->
+        </ul> <!--end::End Navbar Links-->
+    </div> <!--end::Container-->
+</nav> <!--end::Header-->

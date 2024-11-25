@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    Comprobante de {{ tipo|capfirst }}
+{% endblock title_block %}
+
+{% block css_extras %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock css_extras %}
+
+{% block content %}
+<main class="app-main">
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Comprobante de {{ tipo|capfirst }}</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'transacciones:historial' %}">Historial</a></li>
+                        <li class="breadcrumb-item active">Comprobante</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-content d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-primary card-outline mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Detalles de la {{ tipo|capfirst }}</h3>
+                </div>
+                <div class="card-body">
+                    <h4>Información de la Transacción</h4>
+                    <hr>
+                    
+                    <p>
+                        <strong>Tipo:</strong> 
+                        {{ tipo|capfirst }}
+                    </p>
+                    
+                    {% if tipo == 'transferencia' %}
+                        <p><strong>Emisor:</strong> {{ transaccion.emisor.username }}</p>
+                        <p><strong>Receptor:</strong> {{ transaccion.receptor.username }}</p>
+                        <p><strong>Monto:</strong> ${{ transaccion.monto }}</p>
+                        <p><strong>Motivo:</strong> {{ transaccion.motivo.nombre }}</p>
+                        <p><strong>Fecha:</strong> {{ transaccion.fecha_transferencia|date:"d/m/Y H:i" }}</p>
+
+                    {% elif tipo == 'deposito' %}
+                        <p><strong>Usuario:</strong> {{ transaccion.usuario.username }}</p>
+                        <p><strong>Monto:</strong> ${{ transaccion.monto }}</p>
+                        <p><strong>Fecha:</strong> {{ transaccion.fecha|date:"d/m/Y H:i" }}</p>
+
+                    {% endif %}
+                    
+                    {% comment %} <p><strong>Fecha:</strong> {{ transaccion.fecha_transferencia|date:"d/m/Y H:i" }}</p> {% endcomment %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'transacciones:historial' %}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left"></i> Volver al historial
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <h2>Comprobante de Transferencia</h2>
+<p>Emisor: {{ transferencia.emisor.username }}</p>
+<p>Receptor: {{ transferencia.receptor.username }}</p>
+<p>Monto: ${{ transferencia.monto }}</p>
+<p>Motivo: {{ transferencia.motivo.nombre }}</p>
+<p>Fecha: {{ transferencia.fecha }}</p> {% endcomment %}
+
+
+{% comment %} <h2>Historial de Transacciones</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Emisor</th>
+            <th>Receptor</th>
+            <th>Monto</th>
+            <th>Motivo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaccion in transacciones %}
+        <tr>
+            <td>{{ transaccion.fecha }}</td>
+            <td>{{ transaccion.emisor.usuario.username }}</td>
+            <td>{{ transaccion.receptor.usuario.username }}</td>
+            <td>{{ transaccion.monto }}</td>
+            <td>{{ transaccion.motivo }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> {% endcomment %}

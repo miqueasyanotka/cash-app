@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    Editar Usuario
+{% endblock title_block %}
+
+{% block content %}
+    <main class="app-main">
+        <div class="app-content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0">{{ titulo }}</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-end">
+                            <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'usuarios:lista' %}">Lista de Usuarios</a></li>
+                            <li class="breadcrumb-item active">{{ titulo }}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-primary card-outline mb-4">
+                    <div class="card-header">
+                        <h4 class="card-title">Editar Usuario</h4>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {% include 'includes/forms_errors.html' with form=formUsuario %}
+                            {% include 'includes/forms.html' with form=formUsuario %}
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-save"></i> Guardar Cambios
+                            </button>
+                            <a href="{% url 'usuarios:lista' %}" class="btn btn-secondary">
+                                <i class="fa-solid fa-xmark"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    {{ titulo }}
+{% endblock title_block %}
+
+{% block content %}
+    <main class="app-main">
+        <div class="app-content-header">
+            <div class="container-fluid">
+                <h3 class="mb-0">Confirmar Eliminación</h3>
+            </div>
+        </div>
+        <div class="app-content d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-danger card-outline">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ titulo }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>¿Estás seguro de que deseas eliminar el motivo: <strong>{{ motivo.nombre }}</strong>?</p>
+                        <p class="text-danger"><strong>Esta acción no se puede deshacer.</strong></p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i> Confirmar Eliminación
+                            </button>
+                        </form>
+                        <a href="{% url 'transacciones:listar_motivos' %}" class="btn btn-secondary">
+                            <i class="fa-solid fa-arrow-left"></i> Cancelar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+

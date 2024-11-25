@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% block title_block %}
+    {{ titulo }}
+{% endblock title_block %}
+
+{% block content %}
+    <main class="app-main">
+        <div class="app-content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0">{{ titulo }}</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-end">
+                            <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'usuarios:lista' %}">Lista de Usuarios</a></li>
+                            <li class="breadcrumb-item active">{{ titulo }}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-primary card-outline mb-4">
+                    <div class="card-header">
+                        <h4 class="card-title">Información del Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </div>
+
+                        
+                        {% else %}
+                            <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
+                            <p><strong>Nombre:</strong> {{ usuario.first_name|default:"No especificado" }}</p>
+                            <p><strong>Apellido:</strong> {{ usuario.last_name|default:"No especificado" }}</p>
+                            <p><strong>Email:</strong> {{ usuario.email|default:"No especificado" }}</p>
+                            <p><strong>Fecha de creación:</strong> {{ usuario.date_joined|date:"d/m/Y H:i" }}</p>
+                            <p><strong>Última actualización:</strong> {{ usuario.last_login|date:"d/m/Y H:i" }}</p>
+                        {% endif %}
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'usuarios:lista' %}" class="btn btn-secondary">
+                            <i class="fa-solid fa-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
